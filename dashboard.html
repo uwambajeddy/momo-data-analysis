@@ -1,0 +1,136 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Transactions</h3>
+            <div class="value" id="totalTransactions">0</div>
+        </div>
+        <div class="stat-card">
+            <h3>Total Amount</h3>
+            <div class="value" id="totalAmount">RWF 0</div>
+        </div>
+        <div class="stat-card">
+            <h3>Average Transaction</h3>
+            <div class="value" id="avgTransaction">RWF 0</div>
+        </div>
+        <div class="stat-card">
+            <h3>Total Types</h3>
+            <div class="value" id="totalTypes">0</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="transactionChart"></canvas>
+    </div>
+
+    <script>
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('https://momo-g9rq.onrender.com/transactions');
+                const transactions = await response.json();
+
+                // Update statistics
+                document.getElementById('totalTransactions').textContent = transactions.length;
+                
+                const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
+                document.getElementById('totalAmount').textContent = `RWF ${totalAmount.toLocaleString()}`;
+                
+                const avgAmount = Math.round(totalAmount / transactions.length);
+                document.getElementById('avgTransaction').textContent = `RWF ${avgAmount.toLocaleString()}`;
+                
+                const uniqueTypes = new Set(transactions.map(t => t.type));
+                document.getElementById('totalTypes').textContent = uniqueTypes.size;
+
+                // Prepare chart data
+                const typeCount = {};
+                transactions.forEach(t => {
+                    typeCount[t.type] = (typeCount[t.type] || 0) + 1;
+                });
+
+                // Create chart
+                const ctx = document.getElementById('transactionChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(typeCount),
+                        datasets: [{
+                            label: 'Transactions by Type',
+                            data: Object.values(typeCount),
+                            backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                            borderColor: 'rgba(139, 92, 246, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Transaction Distribution by Type'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        // Load data when the component is mounted
+        loadDashboardData();
+    </script>
+</body>
+</html>
