@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use('/dashboard', express.static('../'));
 const upload = multer({ dest: 'uploads/' });
 
 const logUnprocessedMessage = (message) => {
