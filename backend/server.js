@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { fileURLToPath } = require('url');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const multer = require('multer');
@@ -19,7 +20,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-express.static(path.join(__dirname, '..'))
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
 const upload = multer({ dest: 'uploads/' });
 
 const logUnprocessedMessage = (message) => {
