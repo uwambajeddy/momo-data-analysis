@@ -4,8 +4,8 @@
   "description": "Momo Data Analysis",
   "main": "server.js",
   "scripts": {
-    "start": "node ./server.js",
-    "dev": "nodemon ./server.js",
+    "start": "NODE_ENV=production node ./server.js",
+    "dev": "NODE_ENV=development nodemon ./server.js",
     "up": "npx sequelize-cli db:migrate",
     "down": "npx sequelize-cli db:migrate:undo:all"
   },
