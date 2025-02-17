@@ -119,7 +119,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
             loadComponent('cash-power-payments');
         }
         else if (text === 'third party transactions') {
-            loadComponent('third-party-transactions.html');
+            loadComponent('third-party-transactions');
         }
         else if (text === 'withdrawals from agents') {
             loadComponent('withdrawal-from-agents');
