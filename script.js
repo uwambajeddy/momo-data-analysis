@@ -15,14 +15,24 @@ menuItems.forEach(item => {
     });
 });
 
+
+
+
 const modal = document.getElementById('uploadModal');
 const uploadBtn = document.getElementById('uploadBtn');
 const fileInput = document.getElementById(('fileInput'));
 const closeBtn = document.getElementsByClassName('close')[0];
 const uploadBtnInModal = document.querySelector('.upload-btn');
 
-uploadBtn.onClick = () => modal.style.displa = "block";
-closeBtn.onClick = () => modal.style.display = "none"; 
+uploadBtn.addEventListener('click', () => {
+  modal.style.display = "block";
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = "none";
+});
+
+
 window.onclick = (event) => {
     if (event.target == modal) {
         modal.style.display = "none";
