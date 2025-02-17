@@ -115,6 +115,20 @@ document.querySelectorAll('.menu-item').forEach(item => {
             loadComponent('bank-deposits');
         } else if (text === 'airtime bill payments') {
             loadComponent('airtime-payments');
+        } else if (text === 'cash power bill payments') {
+            loadComponent('cash-power-payments');
+        }
+        else if (text === 'third party transactions') {
+            loadComponent('third-party-transactions.html');
+        }
+        else if (text === 'withdrawals from agents') {
+            loadComponent('withdrawal-from-agents');
+        }
+        else if (text === 'bank transfers') {
+            loadComponent('banktransfer');
+        }
+        else if (text === 'internet voice bundles') {
+            loadComponent('internet-voicebundles');
         }
        
     });
