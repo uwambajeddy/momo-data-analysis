@@ -144,7 +144,7 @@
                         row.innerHTML = `
                             <td>${new Date(transaction.transaction_date).toLocaleDateString()}</td>
                             <td class="amount">RWF ${transaction.amount.toLocaleString()}</td>
-                            <td>${transaction.sender}</td>
+                            <td>${transaction.receiver}</td>
                             <td>${transaction.transaction_id}</td>
                         `;
                         tbody.appendChild(row);
