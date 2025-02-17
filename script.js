@@ -75,7 +75,7 @@ searchIcon.addEventListener('click', async () => {
 
 
 function displaySearchResults(transactions) {
-    const contentDiv = document.querySelector('#transactionsBody');
+    const contentDiv = document.querySelector('.dashboard-content');
     
     contentDiv.innerHTML = `<h2>Search Results</h2>`;
 
