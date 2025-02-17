@@ -111,6 +111,10 @@ document.querySelectorAll('.menu-item').forEach(item => {
             loadComponent('dashboard');
         } else if (text === 'incoming money') {
             loadComponent('incoming-money');
+        } else if (text === 'bank deposits') {
+            loadComponent('bank-deposits');
+        } else if (text === 'airtime bill payments') {
+            loadComponent('airtime-payments');
         }
        
     });
