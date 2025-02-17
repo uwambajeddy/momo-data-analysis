@@ -168,15 +168,7 @@
     </div>
 
     <div class="pagination">
-        <div class="items-per-page">
-            <label for="pageSize">Items per page:</label>
-            <select id="pageSize" onchange="handlePageSizeChange()">
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-            </select>
-        </div>
+     
         <div class="pagination-info" id="pagination-info"></div>
         <div class="pagination-controls">
             <button id="prevButton" onclick="previousPage()">Previous</button>
@@ -188,14 +180,10 @@
 
      <script>
         let currentPage = 1;
-        let pageSize = 10;
+        const pageSize = 10;
         let allTransactions = [];
 
-        function handlePageSizeChange() {
-            pageSize = parseInt(document.getElementById('pageSize').value);
-            currentPage = 1;
-            displayTransactions();
-        }
+     
 
         function previousPage() {
             if (currentPage > 1) {
