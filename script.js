@@ -127,10 +127,12 @@ document.querySelectorAll('.menu-item').forEach(item => {
         else if (text === 'bank transfers') {
             loadComponent('banktransfer');
         }
-        else if (text === 'internet voice bundles') {
+        else if (text === 'internet and voice bundles') {
             loadComponent('internet-voicebundles');
         } else if (text === 'payments to code holders') {
-            loadComponent('payments-to-code-holders.html');
+            loadComponent('payments-to-code-holders');
+        } else if (text === 'transfers to mobile number') {
+            loadComponent('transfers-to-mobile-number');
         }
        
     });
