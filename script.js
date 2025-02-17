@@ -129,6 +129,8 @@ document.querySelectorAll('.menu-item').forEach(item => {
         }
         else if (text === 'internet voice bundles') {
             loadComponent('internet-voicebundles');
+        } else if (text === 'payments to code holders') {
+            loadComponent('payments-to-code-holders.html');
         }
        
     });
