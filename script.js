@@ -46,13 +46,11 @@ const searchInput = document.querySelector('.search-input');
 const searchIcon = document.querySelector('.search-icon');
 
 
-searchIcon.addEventListener('click', async () => {
-    
+async function performSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    if (!searchTerm) return; // Do nothing if empty
+    if (!searchTerm) return; 
 
     try {
-        
         const response = await fetch('https://momo-g9rq.onrender.com/transactions');
         const transactions = await response.json();
 
@@ -66,13 +64,21 @@ searchIcon.addEventListener('click', async () => {
             );
         });
 
-        
         displaySearchResults(filteredTransactions);
     } catch (error) {
         console.error('Error performing search:', error);
     }
-});
+}
 
+
+searchIcon.addEventListener('click', performSearch);
+
+
+searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        performSearch();
+    }
+});
 
 function displaySearchResults(transactions) {
     const contentDiv = document.querySelector('.dashboard-content');
