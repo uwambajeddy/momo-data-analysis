@@ -7,6 +7,42 @@
         <title>MoMo Dashboard</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="styles.css"></link>
+        <style>
+            
+        .transactions-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .transactions-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transactions-table th,
+        .transactions-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transactions-table th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+
+        .transactions-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #059669;
+        }
+        </style>
     </head>
     <body>
         <div class="container">
