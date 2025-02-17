@@ -1,1 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfers To Mobile Numbers</title>
+    <style>
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-bank-transfers {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-bank-transfers label {
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .filter-bank-transfers input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .bank-transfers-table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .bank-transfers-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bank-transfers-table th,
+        .bank-transfers-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bank-transfers-table th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+
+        .bank-transfers-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #059669;
+        }
+
+        .apply-filters {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .apply-filters:hover {
+            background: #7c3aed;
+        }
+
+         /* Styles for pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination-info {
+            color: #666;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination-controls button {
+            background: #f3f4f6;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #374151;
+        }
+
+        .pagination-controls button:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .pagination-controls button:hover:not(:disabled) {
+            background: #e5e7eb;
+        }
+
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .items-per-page select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="filters">
+        <div class="filter-bank-transfers">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate">
+        </div>
+        <div class="filter-bank-transfers">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate">
+        </div>
+        <div class="filter-bank-transfers">
+            <label for="maxAmount">Max Amount</label>
+            <input type="number" id="maxAmount" placeholder="Enter max amount">
+        </div>
+        <div class="filter-bank-transfers">
+            <button class="apply-filters" onclick="loadBankTransfers()">Apply Filters</button>
+        </div>
+    </div>
+
+    <div class="bank-transfers-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Receiver</th>
+                    <th>Transaction ID</th>
+                </tr>
+            </thead>
+            <tbody id="bank-transfers-Body">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <div class="items-per-page">
+            <label for="pageSize">Items per page:</label>
+            <select id="pageSize" onchange="handlePageSizeChange()">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div class="pagination-info" id="pagination-info"></div>
+        <div class="pagination-controls">
+            <button id="prevButton" onclick="previousPage()">Previous</button>
+            <button id="nextButton" onclick="nextPage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let pageSize = 10;
+        let allTransactions = [];
+
+        function handlePageSizeChange() {
+            pageSize = parseInt(document.getElementById('pageSize').value);
+            currentPage = 1;
+            displayTransactions();
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayTransactions();
+            }
+        }
+
+        function nextPage() {
+            const maxPage = Math.ceil(allTransactions.length / pageSize);
+            if (currentPage < maxPage) {
+                currentPage++;
+                displayTransactions();
+            }
+        }
+
+        function displayTransactions() {
+            const tbody = document.getElementById('bank-transfers-Body');
+            tbody.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const paginatedTransactions = allTransactions.slice(startIndex, endIndex);
+
+            if (paginatedTransactions.length === 0) {
+                const noDataRow = document.createElement('tr');
+                noDataRow.innerHTML = `
+                    <td colspan="4" style="text-align: center; padding: 20px;">
+                        No bank transfers found
+                    </td>
+                `;
+                tbody.appendChild(noDataRow);
+            } else {
+                paginatedTransactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(transaction.transaction_date).toLocaleDateString()}</td>
+                        <td class="amount">RWF ${transaction.amount.toLocaleString()}</td>
+                        <td>${transaction.receiver}</td>
+                        <td>${transaction.transaction_id}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Update pagination info and controls
+            const totalTransactions = allTransactions.length;
+            const totalPages = Math.ceil(totalTransactions / pageSize);
+            const paginationInfo = document.getElementById('pagination-info');
+            paginationInfo.textContent = `Page ${currentPage} of ${totalPages} (${totalTransactions} total)`;
+
+            // Update button states
+            document.getElementById('prevButton').disabled = currentPage === 1;
+            document.getElementById('nextButton').disabled = currentPage === totalPages;
+        }
+
+        async function loadTransfers() {
+            try {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const maxAmount = document.getElementById('maxAmount').value;
+
+                let url = 'https://momo-g9rq.onrender.com/transactions?type=Transfers+To+Mobile+Numbers';
+
+                if (startDate) url += `&start=${startDate}`;
+                if (endDate) url += `&end=${endDate}`;
+                if (maxAmount) url += `&maxAmount=${maxAmount}`;
+
+                const response = await fetch(url);
+                const transactions = await response.json();
+
+                allTransactions = transactions
+                    .filter(t => t.type === 'Transfers To Mobile Numbers')
+                    .sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date));
+
+                currentPage = 1;
+                displayTransactions();
+
+            } catch (error) {
+                console.error('Error loading Bank Transfer transactions:', error);
+            }
+        }
+
+        loadTransfers();
+    </script>
+</body>
+
+</html>
