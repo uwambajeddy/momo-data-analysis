@@ -270,7 +270,7 @@
                 const transactions = await response.json();
 
                 allTransactions = transactions
-                    .filter(t => t.type === 'Internet and Voice Bundles')
+                    .filter(t => t.type === 'Internet And Voice Bundles')
                     .sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date));
 
                 currentPage = 1;
