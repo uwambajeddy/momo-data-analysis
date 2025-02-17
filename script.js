@@ -40,6 +40,87 @@ window.onclick = (event) => {
 };
 
 
+
+
+const searchInput = document.querySelector('.search-input');
+const searchIcon = document.querySelector('.search-icon');
+
+
+searchIcon.addEventListener('click', async () => {
+    
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    if (!searchTerm) return; // Do nothing if empty
+
+    try {
+        
+        const response = await fetch('https://momo-g9rq.onrender.com/transactions');
+        const transactions = await response.json();
+
+        
+        const filteredTransactions = transactions.filter(t => {
+            const amountStr = t.amount ? t.amount.toString() : "";
+            return (
+                amountStr.includes(searchTerm) ||
+                (t.transaction_id && t.transaction_id.toLowerCase().includes(searchTerm)) ||
+                (t.sender && t.sender.toLowerCase().includes(searchTerm))
+            );
+        });
+
+        
+        displaySearchResults(filteredTransactions);
+    } catch (error) {
+        console.error('Error performing search:', error);
+    }
+});
+
+
+function displaySearchResults(transactions) {
+    const contentDiv = document.querySelector('.dashboard-content');
+    
+    contentDiv.innerHTML = `<h2>Search Results</h2>`;
+
+    if (transactions.length === 0) {
+        contentDiv.innerHTML += `<p>No transactions found matching your search.</p>`;
+        return;
+    }
+
+    
+    let tableHTML = `
+    <div class="transactions-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Sender</th>
+                    <th>Transaction ID</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    transactions.forEach(t => {
+        tableHTML += `
+            <tr>
+                <td>${new Date(t.transaction_date).toLocaleDateString()}</td>
+                <td class="amount">RWF ${t.amount.toLocaleString()}</td>
+                <td>${t.sender || ""}</td>
+                <td>${t.transaction_id || ""}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    
+    contentDiv.innerHTML += tableHTML;
+}
+
+
 fileInput.addEventListener('change', async (e) => {
 
     const file = e.target.files[0]; 
