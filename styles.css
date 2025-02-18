@@ -18,7 +18,7 @@ body {
     width: 250px;
     /* background-color: #8b5cf6; */
     background-color: #004f71;
-    color: #ffcb05; 
+    color:#0c0c0c; 
     padding: 20px; 
     transition: width 0.3s;
 }
