@@ -54,7 +54,7 @@ body {
 
 .menu-item.active {
     background-color: rgb(255,203,5); 
-    color: #ffcb05;
+    color: #0f0f0f;
 }
 
 .menu-item i {
