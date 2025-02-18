@@ -27,6 +27,12 @@ body {
     width: 80px;
 }
 
+.sidebar.collapsed > div:first-child {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
 .toggle-btn {
     background: none;
     border: none; 
@@ -46,10 +52,12 @@ body {
     cursor: pointer; 
     border-radius: 4px;
     transition: background-color 0.3s;
+    color: rgb(255,203,5);
 }
 
 .menu-item:hover {
-    background-color: rgb(255,203,5);
+    /* background-color: rgb(255,203,5); */
+    background-color: black;
 }
 
 .menu-item.active {
