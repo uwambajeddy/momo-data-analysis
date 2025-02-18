@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MoMo Dashboard</title>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css"></link>
-        <style>
-            
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MoMo Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    </link>
+    <style>
         .transactions-table {
             width: 100%;
-            background: white;
+            background: #004f71;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgb(255, 203, 5);
             overflow: hidden;
         }
 
@@ -26,126 +26,128 @@
         .transactions-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ffcb05;
         }
 
         .transactions-table th {
-            background: #f9fafb;
+            background: #004f71;
             font-weight: 600;
         }
 
         .transactions-table tr:hover {
-            background: #f9fafb;
+            background: #004f71;
         }
 
         .amount {
             font-weight: 600;
-            color: #059669;
+            color: #ffcb05;
         }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <!-- The following are sidebar scripts -->
-            <div class="sidebar" id="sidebar">
-                <button class="toggle-btn" id="toggleSidebar">☰</button>
-                <ul class="menu-items">
-                    <li class="menu-item active">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </li>
+    </style>
+</head>
 
-                    <li class="menu-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>Incoming Money</span>
-                    </li>
+<body>
+    <div class="container">
+        <!-- The following are sidebar scripts -->
+        <div class="sidebar" id="sidebar">
+            <button class="toggle-btn" id="toggleSidebar">☰</button>
+            <ul class="menu-items">
+                <li class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-code"></i>
-                        <span>Payments to Code Holders</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Incoming Money</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Transfers to Mobile Numbers</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-code"></i>
+                    <span>Payments to Code Holders</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-university"></i>
-                        <span>Bank Deposits</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Transfers to Mobile Numbers</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-phone"></i>
-                        <span>Airtime Bill Payments</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-university"></i>
+                    <span>Bank Deposits</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-bolt"></i>
-                        <span>Cash Power Bill Payments</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Airtime Bill Payments</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-exchange-alt"></i>
-                        <span>Third Party Transactions</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Cash Power Bill Payments</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>Withdrawals from Agents</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Third Party Transactions</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-bank"></i>
-                        <span>Bank Transfers</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Withdrawals from Agents</span>
+                </li>
 
-                    <li class="menu-item">
-                        <i class="fas fa-wifi"></i>
-                        <span>Internet & Voice Bundles</span>
-                    </li>
+                <li class="menu-item">
+                    <i class="fas fa-bank"></i>
+                    <span>Bank Transfers</span>
+                </li>
 
-                   
+                <li class="menu-item">
+                    <i class="fas fa-wifi"></i>
+                    <span>Internet & Voice Bundles</span>
+                </li>
 
-                </ul>
-            </div>
 
-            <!-- The following are scripts for Main Content-->
-            <div class="main-content">
-                <div class="header">
-                    <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search transactions...">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                    <div class="header-icons">
-                        <div class="header-icon" id="uploadBtn">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                      
-                    </div>
 
-                </div>
-
-                <!--Dashboard content-->
-                <div class="dashboard-content">
-                    <h2>Dashboard Overview</h2>
-                    <!-- dynamic data displays here -->
-                </div>
-            </div>
-        </div>
-        <!-- upload modal -->
-        <div id="uploadModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Upload SMS Data</h2>
-                <div class="file-upload">
-                    <p>Drag & drop your XML file here or click to browse</p>
-                    <input type="file" id="fileInput" accept=".xml" style="display:none;">
-                    <button class="upload-btn">Choose File</button>
-                </div>
-            </div>
+            </ul>
         </div>
 
-        <script src="script.js"></script>
-    </body>
+        <!-- The following are scripts for Main Content-->
+        <div class="main-content">
+            <div class="header">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search transactions...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="header-icons">
+                    <div class="header-icon" id="uploadBtn">
+                        <i class="fas fa-plus"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--Dashboard content-->
+            <div class="dashboard-content">
+                <h2>Dashboard Overview</h2>
+                <!-- dynamic data displays here -->
+            </div>
+        </div>
+    </div>
+    <!-- upload modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Upload SMS Data</h2>
+            <div class="file-upload">
+                <p>Drag & drop your XML file here or click to browse</p>
+                <input type="file" id="fileInput" accept=".xml" style="display:none;">
+                <button class="upload-btn">Choose File</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
 </html>
