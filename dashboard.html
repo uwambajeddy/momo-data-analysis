@@ -1,6 +1,7 @@
 <!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,39 +16,39 @@
         }
 
         .stat-card {
-            background: white;
+            background: #004f71;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgb(255, 203, 5);
         }
 
         .stat-card h3 {
             margin: 0;
-            color: #666;
+            color: #ffcb05;
             font-size: 14px;
         }
 
         .stat-card .value {
             font-size: 24px;
             font-weight: bold;
-            color: #333;
+            color: #ffcb05;
             margin: 10px 0;
         }
 
         .chart-container {
-            background: white;
+            background: #004f71;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgb(255, 203, 5);
             margin-top: 20px;
         }
 
-        
+
         .transactions-table {
             width: 100%;
-            background: white;
+            background: #004f71;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgb(255, 203, 5);
             overflow: hidden;
         }
 
@@ -60,24 +61,25 @@
         .transactions-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #004f71;
         }
 
         .transactions-table th {
-            background: #f9fafb;
+            background: #004f71;
             font-weight: 600;
         }
 
         .transactions-table tr:hover {
-            background: #f9fafb;
+            background: #004f71;
         }
 
         .amount {
             font-weight: 600;
-            color: #059669;
+            color: #ffcb05;
         }
     </style>
 </head>
+
 <body>
     <div class="dashboard-stats">
         <div class="stat-card">
@@ -103,8 +105,8 @@
     </div>
 
 
-   
-    
+
+
     <script>
         async function loadDashboardData() {
             try {
@@ -113,13 +115,13 @@
 
                 // Update statistics
                 document.getElementById('totalTransactions').textContent = transactions.length;
-                
+
                 const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
                 document.getElementById('totalAmount').textContent = `RWF ${totalAmount.toLocaleString()}`;
-                
+
                 const avgAmount = Math.round(totalAmount / transactions.length);
                 document.getElementById('avgTransaction').textContent = `RWF ${avgAmount.toLocaleString()}`;
-                
+
                 const uniqueTypes = new Set(transactions.map(t => t.type));
                 document.getElementById('totalTypes').textContent = uniqueTypes.size;
 
@@ -171,4 +173,5 @@
         loadDashboardData();
     </script>
 </body>
+
 </html>
