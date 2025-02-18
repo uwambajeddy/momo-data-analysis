@@ -230,13 +230,13 @@
                 });
             }
 
-            // Update pagination info and controls
+
             const totalTransactions = allTransactions.length;
             const totalPages = Math.ceil(totalTransactions / pageSize);
             const paginationInfo = document.getElementById('pagination-info');
             paginationInfo.textContent = `Page ${currentPage} of ${totalPages} (${totalTransactions} total)`;
 
-            // Update button states
+
             document.getElementById('prevButton').disabled = currentPage === 1;
             document.getElementById('nextButton').disabled = currentPage === totalPages;
         }
