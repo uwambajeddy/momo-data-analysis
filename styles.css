@@ -16,7 +16,7 @@ body {
 
 .sidebar {
   width: 300px;
-  /* background-color: #8b5cf6; */
+  
   background-color: #004f71;
   color: #0c0c0c;
   padding: 20px;
@@ -56,7 +56,7 @@ body {
 }
 
 .menu-item:hover {
-  /* background-color: rgb(255,203,5); */
+  
   background-color: black;
 }
 
@@ -151,7 +151,7 @@ body {
   box-shadow: 0 2px 4px rgb(255, 203, 5);
 }
 
-/* upload modal */
+
 .modal {
   display: none;
   position: fixed;
