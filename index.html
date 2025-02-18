@@ -145,8 +145,22 @@
             <div class="file-upload">
                 <p>Drag & drop your XML file here or click to browse</p>
                 <input type="file" id="fileInput" accept=".xml" style="display:none;">
-                <button class="upload-btn">Choose File</button>
+
+                <button id="uploadFileButton" class="upload-btn" style="color: white; margin-top: 20px;">
+                    Upload XML File
+                </button>
             </div>
+
+
+
+            <div id="loadingIndicator" style="display: none; text-align: center; margin-top: 10px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #004f71;"></i>
+                <p>Uploading...</p>
+            </div>
+
+
+            <div id="uploadMessage" style="text-align: center; margin-top: 10px;"></div>
+
         </div>
     </div>
 

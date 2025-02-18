@@ -25,11 +25,11 @@ const closeBtn = document.getElementsByClassName('close')[0];
 const uploadBtnInModal = document.querySelector('.upload-btn');
 
 uploadBtn.addEventListener('click', () => {
-  modal.style.display = "block";
+    modal.style.display = "block";
 });
 
 closeBtn.addEventListener('click', () => {
-  modal.style.display = "none";
+    modal.style.display = "none";
 });
 
 
@@ -48,13 +48,13 @@ const searchIcon = document.querySelector('.search-icon');
 
 async function performSearch() {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    if (!searchTerm) return; 
+    if (!searchTerm) return;
 
     try {
         const response = await fetch('https://momo-g9rq.onrender.com/transactions');
         const transactions = await response.json();
 
-        
+
         const filteredTransactions = transactions.filter(t => {
             const amountStr = t.amount ? t.amount.toString() : "";
             return (
@@ -82,7 +82,7 @@ searchInput.addEventListener('keydown', (event) => {
 
 function displaySearchResults(transactions) {
     const contentDiv = document.querySelector('.dashboard-content');
-    
+
     contentDiv.innerHTML = `<h2>Search Results</h2>`;
 
     if (transactions.length === 0) {
@@ -90,7 +90,7 @@ function displaySearchResults(transactions) {
         return;
     }
 
-    
+
     let tableHTML = `
     <div class="transactions-table">
         <table>
@@ -122,14 +122,14 @@ function displaySearchResults(transactions) {
     </div>
     `;
 
-    
+
     contentDiv.innerHTML += tableHTML;
 }
 
 
 fileInput.addEventListener('change', async (e) => {
 
-    const file = e.target.files[0]; 
+    const file = e.target.files[0];
     if (file) {
         const formData = new FormData();
         formData.append('file', file);
@@ -157,8 +157,8 @@ fileInput.addEventListener('change', async (e) => {
 // Loading transactions data
 async function loadTransactions() {
     try {
-        const response  = await fetch('https://momo-g9rq.onrender.com/transactions');
-        const data = await response.json(); 
+        const response = await fetch('https://momo-g9rq.onrender.com/transactions');
+        const data = await response.json();
         console.log(data);
     } catch (error) {
         console.error('Error loading transactions: ', error);
@@ -188,12 +188,12 @@ function loadComponent(name) {
 
 
 function setActiveMenuItem(clickedItem) {
-    
+
     document.querySelectorAll('.menu-item').forEach(item => {
         item.classList.remove('active');
     });
-    
-    
+
+
     clickedItem.classList.add('active');
 }
 
@@ -202,7 +202,7 @@ function setActiveMenuItem(clickedItem) {
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', () => {
         setActiveMenuItem(item);
-        
+
         const text = item.querySelector('span').textContent.toLowerCase();
         if (text === 'dashboard') {
             loadComponent('dashboard');
@@ -224,14 +224,61 @@ document.querySelectorAll('.menu-item').forEach(item => {
         else if (text === 'bank transfers') {
             loadComponent('banktransfer');
         }
-        else if (text === 'internet and voice bundles') {
+        else if (text === 'internet & voice bundles') {
             loadComponent('internet-voicebundles');
         } else if (text === 'payments to code holders') {
             loadComponent('payments-to-code-holders');
         } else if (text === 'transfers to mobile numbers') {
             loadComponent('transfers-to-mobile-numbers');
         }
-       
+
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById("fileInput");
+    const uploadButton = document.getElementById("uploadFileButton");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    const uploadMessage = document.getElementById("uploadMessage");
+
+    // Trigger file selection when button is clicked
+    uploadButton.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    // Handle file selection and upload
+    fileInput.addEventListener("change", async function (event) {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Show loading indicator and reset messages
+        loadingIndicator.style.display = "block";
+        uploadMessage.innerHTML = "";
+
+        try {
+            // Send file to backend
+            const response = await fetch("https://momo-g9rq.onrender.com/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+            loadingIndicator.style.display = "none"; // Hide loading indicator
+
+            if (response.ok) {
+                uploadMessage.innerHTML = `<p style="color: green;">✅ File uploaded successfully! Transactions processed: ${result.message}</p>`;
+            } else {
+                uploadMessage.innerHTML = `<p style="color: red;">❌ Upload failed: ${result.error}</p>`;
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            uploadMessage.innerHTML = `<p style="color: red;">❌ An error occurred while uploading.</p>`;
+            loadingIndicator.style.display = "none";
+        }
     });
 });
 
