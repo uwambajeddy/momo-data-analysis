@@ -35,6 +35,7 @@
 
         .transactions-table {
             width: 100%;
+            color: white;
             background: #004f71;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgb(255, 203, 5);
@@ -137,7 +138,8 @@
                 tbody.innerHTML = '';
 
                 transactions
-                    .filter(t => ["Withdrawals from Agents", "Bank Transfers", "Internet and Voice Bundle Purchases"].includes(t.type))
+                    .filter(t => ["Withdrawals from Agents", "Bank Transfers",
+                        "Internet and Voice Bundle Purchases"].includes(t.type))
                     .sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date))
                     .forEach(transaction => {
                         const row = document.createElement('tr');
